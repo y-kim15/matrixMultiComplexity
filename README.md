@@ -1,1 +1,2 @@
-# CS3052p1 this is a repo for first practical of cs3052 module
+# CS3052p1 
+This is a repo for first practical of cs3052 module
