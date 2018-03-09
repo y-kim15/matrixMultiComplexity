@@ -38,7 +38,7 @@ public class Utils {
         Random random = new Random();
 
         // generates number of zeros there will be
-        int nZeros = random.nextInt(total-min+1) + min;
+        int nZeros = random.nextInt(total-min-1) + min;
         // generates random sequence of indices to place values
         List<Integer> range = IntStream.rangeClosed(0, n*n-1)
                 .boxed().collect(Collectors.toList());

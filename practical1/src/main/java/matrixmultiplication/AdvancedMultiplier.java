@@ -18,11 +18,14 @@ public class AdvancedMultiplier {
             Arowi = a.getValues()[i];
             Crowi = C[i];
             for(k = 0;k<dim;k++){
-                Browi = B[k];
-                aValue = Arowi[k];
-                for(j = dim;--j>=0;){
-                    Crowi[j] += aValue*Browi[j];
+                if(Arowi[k]>0){
+                    Browi = B[k];
+                    aValue = Arowi[k];
+                    for(j = dim;--j>=0;){
+                        Crowi[j] += aValue*Browi[j];
+                    }
                 }
+
             }
         }
         return x;

@@ -30,7 +30,7 @@ public class CompareMultipliers1Test {
     private static int repeat = 20;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("INTM", 100,1000,20,100);
+        return Utils.getParams("INTM", 100,1000,repeat,100);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 
@@ -68,7 +68,7 @@ public class CompareMultipliers1Test {
     }
 
     @Test
-    public void testIntMatrixMultiplication(){
+    public void testIntMatrixMultiplication() throws IOException{
         long startTime = System.nanoTime();
         c = testSubject.multiply(a,b);
         long endTime   = System.nanoTime();
@@ -88,59 +88,19 @@ public class CompareMultipliers1Test {
         totalTime[2]+= time;
 
         count++;
-        if(count%repeat==0){
+        if(count==repeat){
             for(int i=0; i<totalTime.length;i++){
                 long average = totalTime[i]/repeat;
                 inputBuffer.add(Long.toString(average));
             }
             Arrays.fill(totalTime,0);
-        }
-    }
-
-    /*@Test
-    //@BenchmarkOptions( benchmarkRounds = 5, warmupRounds = 4)
-    public void testBasicMultiplication(){
-        long startTime = System.nanoTime();
-        c = testSubject.multiply(a,b);
-        long endTime   = System.nanoTime();
-        totalTime = (endTime - startTime)/100000;
-        inputBuffer.addAll(Arrays.asList(Long.toString(totalTime),"-","-"));
-    }
-
-    @Test
-    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
-    public void testImprovedMultiplication(){
-        long startTime = System.nanoTime();
-        c = testSubject.improvedMultiply(a,b);
-        long endTime   = System.nanoTime();
-        totalTime = (endTime - startTime)/100000;
-        inputBuffer.addAll(Arrays.asList("-",Long.toString(totalTime),"-"));
-    }
-
-
-    @Test
-    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
-    public void testAdvancedMultiplication(){
-        long startTime = System.nanoTime();
-        c = testSubject2.multiply(a,b);
-        long endTime   = System.nanoTime();
-        totalTime = (endTime - startTime)/100000;
-        inputBuffer.addAll(Arrays.asList("-","-",Long.toString(totalTime)));
-
-    }
-*/
-
-
-    @After
-    public void recordOutput()throws IOException{
-        if(count%repeat==0){
-            //inputBuffer.add(Long.toString(totalTime));
-
             Utils.writeCSVLine(writer,inputBuffer);
             inputBuffer.clear();
+            count=0;
         }
-
     }
+
+
 
     @AfterClass
     public static void tidy()throws IOException{

@@ -20,10 +20,10 @@ public class BasicMultiplierTest{
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long totalTime=0;
     private static int count = 0;
-    private static int repeat = 20;
+    private static int repeat = 25;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("INTM",100,1200,20,100);
+        return Utils.getParams("INTM",300,1000,repeat,50);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 
@@ -60,7 +60,7 @@ public class BasicMultiplierTest{
     }
 
     @Test
-    public void testIntMatrixMultiplication(){
+    public void testIntMatrixMultiplication() throws IOException{
         long startTime = System.nanoTime();
         c = testSubject.multiply(a,b);
         long endTime   = System.nanoTime();
@@ -72,19 +72,12 @@ public class BasicMultiplierTest{
             long average = totalTime/repeat;
             inputBuffer.add(Long.toString(average));
             totalTime =0;
-        }
-    }
-
-    @After
-    public void recordOutput()throws IOException{
-        if(count%repeat==0){
-            //inputBuffer.add(Long.toString(totalTime));
-
             Utils.writeCSVLine(writer,inputBuffer);
             inputBuffer.clear();
+            count =0;
         }
-
     }
+
 
     @AfterClass
     public static void tidy()throws IOException{
