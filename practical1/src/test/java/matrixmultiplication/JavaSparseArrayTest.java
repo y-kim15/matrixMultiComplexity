@@ -1,7 +1,6 @@
 package matrixmultiplication;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -79,8 +78,8 @@ public class JavaSparseArrayTest {
     @BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
     public void testConvertAndMultiply(){
         long startTime = System.nanoTime();
-        inA = Utils.converToIntMarix(a);//c = a.multiply(b);
-        inB = Utils.converToIntMarix(b);
+        inA = Utils.convertToIntMarix(a);//c = a.multiply(b);
+        inB = Utils.convertToIntMarix(b);
         testSubject2.multiply(inA,inB);
         long endTime   = System.nanoTime();
         totalTime = (endTime - startTime)/100000;

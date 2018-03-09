@@ -1,6 +1,6 @@
 package matrixmultiplication;
 
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import Jama.Matrix;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -14,27 +14,27 @@ import java.util.Arrays;
 import java.util.List;
 
 @RunWith(Parameterized.class)
-public class CRSMultiplierTest {
-    private CRSMultiplier testSubject = new CRSMultiplier();
-    private static String fileName = "./crs_mul_output1.csv";
+public class CompareMultipliers2Test {
+    private static String fileName = "./compare_dataStruct_mul_output.csv";
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
-    private static long totalTime=0;
+    private static long[] totalTime = new long[]{0,0,0,0};
     private static int count = 0;
     private static int repeat = 20;
 
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("CRS",100,1000,20,100);
+
+        return Utils.getParams("default",100,1000,20,100);
     }
 
-    private CRS a;
-    private CRS b;
-    private CRS c;
+    private Pair a;
+    private Pair b;
+    //private CRS c;
     private int len; //same value as nEach //repeat could go to instance init?
 
 
-    public CRSMultiplierTest(CRS a, CRS b, int len){
+    public CompareMultipliers2Test(Pair a, Pair b, int len){
         this.a = a;
         this.b = b;
         this.len = len;
@@ -46,7 +46,7 @@ public class CRSMultiplierTest {
         try {
             Files.deleteIfExists(Paths.get(fileName));
             writer = new FileWriter(fileName);
-            Utils.writeCSVLine(writer, Arrays.asList("Input Size n", "CRS_Times"));
+            Utils.writeCSVLine(writer, Arrays.asList("Matrix Dim n", "JSA", "CRS", "IntMatrix", "Jama"));
         }
         catch(IOException e){
             e.getMessage();
@@ -71,31 +71,79 @@ public class CRSMultiplierTest {
     }
 
     @Test
-    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
-    public void testConvertAndMultiply(){
+    public void testJSAMultiply(){
+        System.out.println("JSA multiply");
+        JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
+        JavaSparseArray jsa2 = Utils.convertToJSA(b.values);
         long startTime = System.nanoTime();
-        c = testSubject.multiply(a,b);
+        new JavaSparseArrayMultiplier().multipliy(jsa1,jsa2);
         long endTime   = System.nanoTime();
-        totalTime += (endTime - startTime)/100000;
-        count++;
-        if(count%repeat==0){
-            long average = totalTime/repeat;
-            inputBuffer.add(Long.toString(average));
-            totalTime =0;
-        }
-
-        //System.out.println("Result====");
-        //c.printCRS();
+        totalTime[0] += (endTime - startTime)/100000;
 
     }
+
+    @Test
+    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
+    public void testConvertAndMultiply(){ //testCRS
+        System.out.println("CRS multiply");
+        CRS crs1 = Utils.convertToCRS(a.values,a.nnz);
+        CRS crs2 = Utils.convertToCRS(b.values, b.nnz);
+        long startTime = System.nanoTime();
+        new CRSMultiplier().multiply(crs1,crs2);
+        long endTime   = System.nanoTime();
+        totalTime[1] += (endTime - startTime)/100000;
+
+    }
+
+    @Test
+    public void testIntMatrixMultiply(){
+        System.out.println("IntMatrix multiply");;
+        IntMatrix newA = new IntMatrix(a.values);
+        IntMatrix newB = new IntMatrix(b.values);
+
+        long startTime = System.nanoTime();
+        new BasicMultiplier().multiply(newA, newB);
+        long endTime = System.nanoTime();
+        totalTime[2] += (endTime - startTime)/100000;
+
+
+    }
+
+
+
+    @Test
+    public void testJamaMultiply(){
+        System.out.println("Jama multiply");
+        Matrix a1 = new Matrix(Utils.convertIntToDoubleArray(a.values));
+        Matrix b1 = new Matrix(Utils.convertIntToDoubleArray(b.values));
+        long startTime = System.nanoTime();
+        a1.times(b1);
+        long endTime   = System.nanoTime();
+        totalTime[3] += (endTime - startTime)/100000;
+
+        count++;
+        if(count%repeat==0){
+            for(int i=0; i<totalTime.length;i++){
+                long average = totalTime[i]/repeat;
+                inputBuffer.add(Long.toString(average));
+            }
+
+
+        }
+
+
+    }
+
+
 
     @After
     public void recordOutput()throws IOException{
         if(count%repeat==0){
-            //inputBuffer.add(Long.toString(totalTime));
+            Arrays.fill(totalTime,0);
             Utils.writeCSVLine(writer,inputBuffer);
             inputBuffer.clear();
         }
+
     }
 
     @AfterClass
