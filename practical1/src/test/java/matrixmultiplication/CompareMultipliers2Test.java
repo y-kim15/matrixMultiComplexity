@@ -94,7 +94,7 @@ public class CompareMultipliers2Test {
         IntMatrix newB = new IntMatrix(b.values);
 
         long startTime = System.nanoTime();
-        new AdvancedMultiplier().multiply(newA, newB);
+        new BasicMultiplier().multiply(newA, newB);
         //new BasicMultiplier().multiply(newA, newB);
         long endTime = System.nanoTime();
         totalTime[2] += (endTime - startTime)/100000;
