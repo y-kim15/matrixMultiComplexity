@@ -22,8 +22,8 @@
             <file leaf-file-name="CompareMultipliers3Test.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers3Test.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="309">
-                    <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
+                  <state relative-caret-position="1245">
+                    <caret line="90" column="55" lean-forward="true" selection-start-line="90" selection-start-column="55" selection-end-line="90" selection-end-column="55" />
                     <folding>
                       <element signature="imports" expanded="true" />
                       <element signature="e#2485#2486#0" expanded="true" />
@@ -43,38 +43,18 @@
       <file leaf-file-name="CompareMultipliers2Test.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers2Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="34" column="44" lean-forward="false" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+            <state relative-caret-position="828">
+              <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SPA.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/SPA.java">
+      <file leaf-file-name="MapMatrix.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/MapMatrix.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdvancedMultiplier.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/IntMatrixMultiplication/AdvancedMultiplier.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MatrixData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/MatrixData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state relative-caret-position="378">
+              <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -112,21 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BasicMultiplier.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/IntMatrixMultiplication/BasicMultiplier.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3315">
-              <caret line="333" column="100" lean-forward="false" selection-start-line="333" selection-start-column="100" selection-end-line="333" selection-end-column="100" />
+            <state relative-caret-position="237">
+              <caret line="78" column="49" lean-forward="true" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -134,11 +104,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JavaSparseArray.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="JavaSparseArray.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/JSAImplementation/JavaSparseArray.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CRS.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/CRS.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CRSMultiplier.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/CRSMultiplier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="17" column="52" lean-forward="true" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SPA.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/SPA.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="43" column="32" lean-forward="true" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -194,9 +194,9 @@
         <option value="$PROJECT_DIR$/src/test/java/matrixmultiplication/JamaMultiplierTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/matrixmultiplication/Pair.java" />
         <option value="$PROJECT_DIR$/src/test/java/matrixmultiplication/MapMatrixTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers3Test.java" />
         <option value="$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers2Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/matrixmultiplication/Utils.java" />
-        <option value="$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers3Test.java" />
       </list>
     </option>
   </component>
@@ -622,17 +622,11 @@
       <workItem from="1520587259532" duration="9840000" />
       <workItem from="1520604494419" duration="7330000" />
       <workItem from="1520627918507" duration="7176000" />
-      <workItem from="1520674226534" duration="8523000" />
+      <workItem from="1520674226534" duration="11996000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BasicMultiplierTest - 2018.03.09 at 22h 40m 30s.xml">
-      <configuration name="BasicMultiplierTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BasicMultiplierTest - 2018.03.09 at 22h 52m 26s.xml">
-      <configuration name="BasicMultiplierTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="BasicMultiplierTest - 2018.03.09 at 23h 01m 59s.xml">
       <configuration name="BasicMultiplierTest" configurationId="JUnit" />
     </history-entry>
@@ -657,9 +651,15 @@
     <history-entry file="CompareMultipliers2Test - 2018.03.10 at 11h 55m 17s.xml">
       <configuration name="CompareMultipliers2Test" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CompareMultipliers2Test - 2018.03.10 at 13h 58m 13s.xml">
+      <configuration name="CompareMultipliers2Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompareMultipliers2Test - 2018.03.10 at 14h 29m 42s.xml">
+      <configuration name="CompareMultipliers2Test" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106323000" />
+    <option name="totallyTimeSpent" value="109796000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2143" y="0" width="1920" height="1080" extended-state="6" />
@@ -904,26 +904,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/CRS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/JSAImplementation/JavaSparseArrayMultiplier.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/CRSMultiplier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="16" column="62" lean-forward="false" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
           <folding />
         </state>
       </provider>
@@ -933,19 +917,6 @@
         <state relative-caret-position="72">
           <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/MapMatrix.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
-          <folding>
-            <element signature="e#344#345#0" expanded="true" />
-            <element signature="e#373#374#0" expanded="true" />
-            <element signature="e#418#419#0" expanded="true" />
-            <element signature="e#464#465#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -970,14 +941,6 @@
             <element signature="e#892#893#0" expanded="false" />
             <element signature="e#954#955#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/SPA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1031,24 +994,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers2Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="34" column="44" lean-forward="false" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3315">
-          <caret line="333" column="100" lean-forward="false" selection-start-line="333" selection-start-column="100" selection-end-line="333" selection-end-column="100" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/JSAImplementation/JavaSparseArray.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1057,14 +1002,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/CRSMultiplier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="17" column="52" lean-forward="true" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/SPA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="43" column="32" lean-forward="true" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/CRSImplementation/CRS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers3Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
+        <state relative-caret-position="1245">
+          <caret line="90" column="55" lean-forward="true" selection-start-line="90" selection-start-column="55" selection-end-line="90" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2485#2486#0" expanded="true" />
             <element signature="e#2559#2560#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/matrixmultiplication/CompareMultipliers2Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="828">
+          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/MapMatrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/matrixmultiplication/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="78" column="49" lean-forward="true" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
