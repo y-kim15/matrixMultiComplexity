@@ -25,14 +25,16 @@ public class CompareMultipliers2Test {
     private static String fileName = "./compare_dataStruct_mul_output.csv";
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
-    private static long[] totalTime = new long[]{0,0,0,0};
+    private static long[] totalTime = new long[]{0,0,0,0,0};
     private static int count = 0;
     private static int repeat = 30;
+    private static double sparsity = 0.75;
+    private static int position = 0;
 
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
 
-        return Utils.getParams("default",500,1000,repeat,50);
+        return Utils.getParamsByConditions(500,1000,repeat, 50, sparsity, position);
     }
 
     private MatrixData a;
@@ -53,7 +55,7 @@ public class CompareMultipliers2Test {
         try {
             Files.deleteIfExists(Paths.get(fileName));
             writer = new FileWriter(fileName);
-            Utils.writeCSVLine(writer, Arrays.asList("Matrix Dim n", "JSA", "CRS", "IntMatrix", "Jama"));
+            Utils.writeCSVLine(writer, Arrays.asList("Matrix Dim n", "JSA", "MapMatrix", "CRS", "IntMatrix", "Jama"));
         }
         catch(IOException e){
             e.getMessage();
@@ -65,39 +67,55 @@ public class CompareMultipliers2Test {
 
 
     @Test
-    public void testJSAMultiply(){JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
+    public void testJSAMultiply(){
+        System.out.println("jsa");
+        JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
         JavaSparseArray jsa2 = Utils.convertToJSA(b.values);
         long startTime = System.nanoTime();
         IntMatrix m1 = Utils.convertToIntMarix(jsa1);
         IntMatrix m2 = Utils.convertToIntMarix(jsa2);
-        new AdvancedMultiplier().multiply(m1,m2);
+        new BasicMultiplier().multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[0] += (endTime - startTime)/100000;
-
     }
 
     @Test
-    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
-    public void testConvertAndMultiply(){
-        CRS crs1 = Utils.convertToCRS(a.values,a.nnz);
-        CRS crs2 = Utils.convertToCRS(b.values, b.nnz);
+    public void testMapMatrixMultiply() throws IOException {
+        MapMatrix map1 = Utils.getMapMatrix(a.values, a.nnz);
+        MapMatrix map2 = Utils.getMapMatrix(b.values, b.nnz);
+        System.out.println("MapMatrixMultiply");
         long startTime = System.nanoTime();
-        new CRSMultiplier().multiply(crs1,crs2);
+        IntMatrix m1 = Utils.convertToIntMatrix(map1);
+        IntMatrix m2 = Utils.convertToIntMatrix(map2);
+        new BasicMultiplier().multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[1] += (endTime - startTime)/100000;
 
     }
 
     @Test
+    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
+    public void testCRSMultiply(){
+        System.out.println("crs");
+        CRS crs1 = Utils.convertToCRS(a.values,a.nnz);
+        CRS crs2 = Utils.convertToCRS(b.values, b.nnz);
+        long startTime = System.nanoTime();
+        new CRSMultiplier().multiply(crs1,crs2);
+        long endTime   = System.nanoTime();
+        totalTime[2] += (endTime - startTime)/100000;
+
+    }
+
+    @Test
     public void testIntMatrixMultiply(){
+        System.out.println("int");
         IntMatrix newA = new IntMatrix(a.values);
         IntMatrix newB = new IntMatrix(b.values);
 
         long startTime = System.nanoTime();
-        new AdvancedMultiplier().multiply(newA, newB);
-        //new BasicMultiplier().multiply(newA, newB);
+        new BasicMultiplier().multiply(newA, newB);
         long endTime = System.nanoTime();
-        totalTime[2] += (endTime - startTime)/100000;
+        totalTime[3] += (endTime - startTime)/100000;
 
 
     }
@@ -106,17 +124,18 @@ public class CompareMultipliers2Test {
 
     @Test
     public void testJamaMultiply() throws IOException{
+        System.out.println("jama");
         Matrix a1 = new Matrix(Utils.convertIntToDoubleArray(a.values));
         Matrix b1 = new Matrix(Utils.convertIntToDoubleArray(b.values));
         long startTime = System.nanoTime();
         a1.times(b1);
         long endTime   = System.nanoTime();
-        totalTime[3] += (endTime - startTime)/100000;
+        totalTime[4] += (endTime - startTime)/100000;
         count++;
 
-
-
     }
+
+
 
     @After
     public void writeToCSV() throws IOException{
