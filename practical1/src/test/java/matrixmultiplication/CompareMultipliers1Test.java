@@ -30,7 +30,7 @@ public class CompareMultipliers1Test {
     private static int repeat = 20;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("INTM", 100,1000,repeat,100);
+        return Utils.getParams("INTM", 300,1200,repeat,50);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 
@@ -68,7 +68,7 @@ public class CompareMultipliers1Test {
     }
 
     @Test
-    public void testIntMatrixMultiplication() throws IOException{
+    public void testIntMatrixMultiplication(){
         long startTime = System.nanoTime();
         c = testSubject.multiply(a,b);
         long endTime   = System.nanoTime();
@@ -87,8 +87,12 @@ public class CompareMultipliers1Test {
         time = (endTime - startTime)/100000;
         totalTime[2]+= time;
 
+    }
+
+    @After
+    public void writeToCSV()throws IOException{
         count++;
-        if(count==repeat){
+        if(count%repeat==0){
             for(int i=0; i<totalTime.length;i++){
                 long average = totalTime[i]/repeat;
                 inputBuffer.add(Long.toString(average));
@@ -99,8 +103,6 @@ public class CompareMultipliers1Test {
             count=0;
         }
     }
-
-
 
     @AfterClass
     public static void tidy()throws IOException{

@@ -25,7 +25,7 @@ public class CompareMultipliers2Test {
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
 
-        return Utils.getParams("default",100,1000,repeat,100);
+        return Utils.getParams("default",100,1500,repeat,50);
     }
 
     private Pair a;
@@ -121,21 +121,24 @@ public class CompareMultipliers2Test {
         long endTime   = System.nanoTime();
         totalTime[3] += (endTime - startTime)/100000;
 
+
+
+
+    }
+
+    @After
+    public void writeToCSV() throws IOException{
         count++;
-        if(count==repeat){
+        if(count%repeat==0){
             for(int i=0; i<totalTime.length;i++){
                 long average = totalTime[i]/repeat;
                 inputBuffer.add(Long.toString(average));
             }
-            count=0;
             Arrays.fill(totalTime,0);
             Utils.writeCSVLine(writer,inputBuffer);
             inputBuffer.clear();
-
-
+            count =0;
         }
-
-
     }
 
 

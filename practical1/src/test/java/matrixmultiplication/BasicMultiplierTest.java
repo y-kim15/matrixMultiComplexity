@@ -1,5 +1,6 @@
 package matrixmultiplication;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,7 +21,7 @@ public class BasicMultiplierTest{
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long totalTime=0;
     private static int count = 0;
-    private static int repeat = 25;
+    private static int repeat = 20;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
         return Utils.getParams("INTM",300,1000,repeat,50);
@@ -60,7 +61,7 @@ public class BasicMultiplierTest{
     }
 
     @Test
-    public void testIntMatrixMultiplication() throws IOException{
+    public void testIntMatrixMultiplication(){
         long startTime = System.nanoTime();
         c = testSubject.multiply(a,b);
         long endTime   = System.nanoTime();
@@ -68,6 +69,11 @@ public class BasicMultiplierTest{
         totalTime += time;
 
         count++;
+
+    }
+
+    @After
+    public void writeToCSV() throws IOException {
         if(count%repeat==0){
             long average = totalTime/repeat;
             inputBuffer.add(Long.toString(average));

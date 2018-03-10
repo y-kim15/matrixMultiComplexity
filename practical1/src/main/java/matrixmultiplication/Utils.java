@@ -38,7 +38,7 @@ public class Utils {
         Random random = new Random();
 
         // generates number of zeros there will be
-        int nZeros = random.nextInt(total-min-1) + min;
+        int nZeros = random.nextInt(total-min) + min;
         // generates random sequence of indices to place values
         List<Integer> range = IntStream.rangeClosed(0, n*n-1)
                 .boxed().collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class Utils {
      * @param sparsity a float value determining the minimal sparsity of the matrix. The value represents the proportion of zero entries
      *                 the value should be at least 0.5.
      * @param positions a integer value denoting the structure of the matrix 0) random (equivalent to getSparseMatrix method)
-     *                 1) a diagonal matrix 2) a clustered matrix
+     *                 1) a diagonal matrix 2) an upper triangle matrix (clustered)
      * @param range maximum integer value for matrix entry
      * @param n dimension of a square matrix
      * @return Pair class instance including a n*n sparse matrix and number of non zeros
@@ -94,12 +94,14 @@ public class Utils {
         }
         else if(positions == 2){
             int nnz = total-nZeros;
+            int end = n;
             for(int i=0; i<n; i++){
-                for(int j=0; j<n; j++){
+                for(int j=0; j<end; j++){
                     matrix[i][j] = r.nextInt(range)+1;
                     nnz--;
                     if(nnz==0) return new Pair(matrix,total-nZeros);
                 }
+                end--;
             }
         }
         else{
