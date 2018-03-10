@@ -23,18 +23,19 @@ public class BasicMultiplierTest{
     private static long totalTime=0;
     private static int count = 0;
     private static int repeat = 20;
+    private static double sparsity = 0.75;
+    private static int condition = 0;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("INTM",300,1000,repeat,50);
+        return Utils.getParamsByConditions(300,1000,repeat,50,sparsity,condition);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 
-    private IntMatrix a;
-    private IntMatrix b;
-    private IntMatrix c;
+    private MatrixData a;
+    private MatrixData b;
     private int n;
 
-    public BasicMultiplierTest(IntMatrix inA, IntMatrix inB, int len){
+    public BasicMultiplierTest(MatrixData inA, MatrixData inB, int len){
         a = inA;
         b = inB;
         n = len;
@@ -57,8 +58,10 @@ public class BasicMultiplierTest{
 
     @Test
     public void testIntMatrixMultiplication(){
+        IntMatrix m1 = new IntMatrix(a.values);
+        IntMatrix m2 = new IntMatrix(b.values);
         long startTime = System.nanoTime();
-        c = testSubject.multiply(a,b);
+        testSubject.multiply(m1,m2);
         long endTime   = System.nanoTime();
         long time = (endTime - startTime)/100000;
         totalTime += time;

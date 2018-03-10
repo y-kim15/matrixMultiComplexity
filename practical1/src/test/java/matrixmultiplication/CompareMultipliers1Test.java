@@ -31,18 +31,19 @@ public class CompareMultipliers1Test {
     private static long[] totalTime=new long[]{0,0,0};
     private static int count = 0;
     private static int repeat = 30;
+    private static double sparsity = 0.75;
+    private static int position = 0;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("INTM", 500,1000,repeat,50);
+        return Utils.getParamsByConditions(500,1000,repeat,50,sparsity,position);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 
-    private IntMatrix a;
-    private IntMatrix b;
-    private IntMatrix c;
+    private MatrixData a;
+    private MatrixData b;
     private int n;
 
-    public CompareMultipliers1Test (IntMatrix inA, IntMatrix inB, int len){
+    public CompareMultipliers1Test (MatrixData inA, MatrixData inB, int len){
         a = inA;
         b = inB;
         n = len;
@@ -72,20 +73,22 @@ public class CompareMultipliers1Test {
 
     @Test
     public void testIntMatrixMultiplication(){
+        IntMatrix m1 = new IntMatrix(a.values);
+        IntMatrix m2 = new IntMatrix(b.values);
         long startTime = System.nanoTime();
-        c = testSubject.multiply(a,b);
+        testSubject.multiply(m1,m2);
         long endTime   = System.nanoTime();
         long time = (endTime - startTime)/100000;
         totalTime[0]+= time;
 
         startTime = System.nanoTime();
-        c = testSubject.improvedMultiply(a,b);
+        testSubject.multiply(m1,m2);
         endTime   = System.nanoTime();
         time = (endTime - startTime)/100000;
         totalTime[1]+= time;
 
         startTime = System.nanoTime();
-        c = testSubject2.multiply(a,b);
+        testSubject.multiply(m1,m2);
         endTime   = System.nanoTime();
         time = (endTime - startTime)/100000;
         totalTime[2]+= time;
