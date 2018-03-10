@@ -75,10 +75,11 @@ public class Utils {
         int nZeros = (int)round(sparsity*total);//r.nextInt(total-min+1) + min;
         boolean extraDone = false;
         if(positions == 1){
-            int extra = total-nZeros-n; //extra to be placed randomly;
+            int nnz = total-nZeros;
+            int extra = nnz-n; //extra to be placed randomly;
             int num = extra/n; int rem = extra%n;
-            if(num==0) num = 1;
-            for(int i=0; i<n; i++) {
+            int outer = (nnz > n)? n : nnz;
+            for(int i=0; i<outer; i++) {
                 int loop = num;
                 if (rem > 0) {
                     loop += 1;
