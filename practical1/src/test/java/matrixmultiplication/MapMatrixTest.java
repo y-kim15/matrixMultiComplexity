@@ -14,9 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-
+@RunWith(Parameterized.class)
 public class MapMatrixTest {
-    private static String fileName = "./jama_mul_output.csv";
+    private static String fileName = "./mapM_mul_output.csv";
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long totalTime = 0;

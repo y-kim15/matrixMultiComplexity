@@ -55,12 +55,6 @@ public class BasicMultiplierTest{
 
     }
 
-    @Before
-    public void passInput(){
-
-        if(count%repeat==0) inputBuffer.add(Integer.toString(n));
-    }
-
     @Test
     public void testIntMatrixMultiplication(){
         long startTime = System.nanoTime();
@@ -75,7 +69,8 @@ public class BasicMultiplierTest{
 
     @After
     public void writeToCSV() throws IOException {
-        if(count%repeat==0){
+        if(count==repeat){
+            inputBuffer.add(Integer.toString(n));
             long average = totalTime/repeat;
             inputBuffer.add(Long.toString(average));
             totalTime =0;
