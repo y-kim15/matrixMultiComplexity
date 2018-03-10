@@ -70,6 +70,7 @@ public class BasicMultiplierTest{
     @After
     public void writeToCSV() throws IOException {
         if(count==repeat){
+            inputBuffer.add(Integer.toString(n));
             long average = totalTime/repeat;
             inputBuffer.add(Long.toString(average));
             totalTime =0;
