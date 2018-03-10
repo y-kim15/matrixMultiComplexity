@@ -70,9 +70,9 @@ public class Utils {
     public static MatrixData getSparseMatrix1(double sparsity, int positions, int range, int n){
         int[][] matrix = new int[n][n];
         int total = (int)pow(n,2);
-        int min = (int)round(sparsity*total);
+        //int min = (int)round(sparsity*total);
         Random r = new Random();
-        int nZeros = r.nextInt(total-min) + min;
+        int nZeros = (int)round(sparsity*total);//r.nextInt(total-min+1) + min;
         boolean extraDone = false;
         if(positions == 1){
             int nnz = total-nZeros;

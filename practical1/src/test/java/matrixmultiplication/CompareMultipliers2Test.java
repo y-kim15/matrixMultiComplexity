@@ -63,26 +63,14 @@ public class CompareMultipliers2Test {
 
     }
 
-    @Before
-    public void passInput(){
-        if(count%repeat==0) inputBuffer.add(Integer.toString(len));
-        /*System.out.println("Before====");
-        a.printCRS();
-        System.out.println("no of nonzeros: " + a.getNnz() );
-        b.printCRS();
-        System.out.println("no of nonzeros: " + b.getNnz());*/
-        //System.out.println(Arrays.deepToString(a.getValueA()));
-        //System.out.println(Arrays.deepToString(a.getIndexA()));
-        //System.out.println(Arrays.deepToString(b.getValueA()));
-        //System.out.println(Arrays.deepToString(b.getIndexA()));
-    }
 
     @Test
-    public void testJSAMultiply(){
-        JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
+    public void testJSAMultiply(){JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
         JavaSparseArray jsa2 = Utils.convertToJSA(b.values);
         long startTime = System.nanoTime();
-        new JavaSparseArrayMultiplier().multipliy(jsa1,jsa2);
+        IntMatrix m1 = Utils.convertToIntMarix(jsa1);
+        IntMatrix m2 = Utils.convertToIntMarix(jsa2);
+        new AdvancedMultiplier().multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[0] += (endTime - startTime)/100000;
 
@@ -124,7 +112,7 @@ public class CompareMultipliers2Test {
         a1.times(b1);
         long endTime   = System.nanoTime();
         totalTime[3] += (endTime - startTime)/100000;
-
+        count++;
 
 
 
@@ -132,8 +120,9 @@ public class CompareMultipliers2Test {
 
     @After
     public void writeToCSV() throws IOException{
-        count++;
-        if(count%repeat==0){
+
+        if(count==repeat){
+            inputBuffer.add(Integer.toString(len));
             for(int i=0; i<totalTime.length;i++){
                 long average = totalTime[i]/repeat;
                 inputBuffer.add(Long.toString(average));
