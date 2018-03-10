@@ -1,4 +1,4 @@
-package matrixmultiplication;
+package matrixmultiplication.CRSImplementation;
 
 import static java.lang.StrictMath.round;
 

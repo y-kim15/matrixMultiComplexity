@@ -1,10 +1,10 @@
-package matrixmultiplication;
+package matrixmultiplication.IntMatrixMultiplication;
 
 public class IntMatrix {
 
     private int [][] values;
     //**this is added field
-    //private int nnz;
+    private int nnz;
 
     /**
      * Creates a square matrix with the given dimension.
@@ -18,6 +18,12 @@ public class IntMatrix {
      */
     public IntMatrix(int[][] values) {
         this.values = values;
+
+    }
+
+    public IntMatrix(int[][] values, int nnz) {
+        this.values = values;
+        this.nnz = nnz;
     }
 
     /**
@@ -47,6 +53,8 @@ public class IntMatrix {
     public int get(int i, int j) {
         return values[i][j];
     }
+
+    public int getNnz(){return nnz;}
     /**
      * Return a (square) slice of the matrix, starting from
      * the given coordinates with the given dimension.

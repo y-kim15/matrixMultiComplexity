@@ -1,6 +1,7 @@
 package matrixmultiplication;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import matrixmultiplication.IntMatrixMultiplication.BasicMultiplier;
+import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

@@ -1,5 +1,8 @@
 package matrixmultiplication;
 
+import matrixmultiplication.IntMatrixMultiplication.AdvancedMultiplier;
+import matrixmultiplication.IntMatrixMultiplication.BasicMultiplier;
+import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -27,10 +30,10 @@ public class CompareMultipliers1Test {
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime=new long[]{0,0,0};
     private static int count = 0;
-    private static int repeat = 20;
+    private static int repeat = 30;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParams("INTM", 300,1200,repeat,50);
+        return Utils.getParams("INTM", 500,1000,repeat,50);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 

@@ -1,6 +1,10 @@
 package matrixmultiplication;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import matrixmultiplication.JSAImplementation.JavaSparseArray;
+import matrixmultiplication.JSAImplementation.JavaSparseArrayMultiplier;
+import matrixmultiplication.IntMatrixMultiplication.BasicMultiplier;
+import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

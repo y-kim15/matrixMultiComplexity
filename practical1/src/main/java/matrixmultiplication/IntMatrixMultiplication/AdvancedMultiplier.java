@@ -1,4 +1,4 @@
-package matrixmultiplication;
+package matrixmultiplication.IntMatrixMultiplication;
 
 public class AdvancedMultiplier {
     public String toString() {

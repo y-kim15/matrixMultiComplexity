@@ -1,4 +1,4 @@
-package matrixmultiplication;
+package matrixmultiplication.JSAImplementation;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -9,13 +9,13 @@ import java.util.List;
 public class JavaSparseArray {
     private int[][] valueA;
     private int[][] indexA;
-    private int len;
+    private int dim;
     private int nnz;
 
     public JavaSparseArray(int[][] valueA, int[][] indexA, int nnz){
         this.valueA = valueA;
         this.indexA = indexA;
-        this.len = valueA.length;
+        this.dim = valueA.length;
         this.nnz = nnz;
     }
 
@@ -27,6 +27,6 @@ public class JavaSparseArray {
         return indexA;
     }
 
-    public int getLen(){return len;}
+    public int getDim(){return dim;}
 
 }

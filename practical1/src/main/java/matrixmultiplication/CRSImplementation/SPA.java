@@ -1,4 +1,6 @@
-package matrixmultiplication;
+package matrixmultiplication.CRSImplementation;
+
+import matrixmultiplication.CRSImplementation.CRS;
 
 import java.util.Arrays;
 

@@ -1,8 +1,11 @@
 package matrixmultiplication;
 
 import Jama.Matrix;
+import matrixmultiplication.CRSImplementation.CRS;
+import matrixmultiplication.JSAImplementation.JavaSparseArray;
+import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 import org.apache.commons.lang3.ArrayUtils;
-import org.omg.PortableInterceptor.INACTIVE;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,7 +34,7 @@ public class Utils {
      * @param n length of square matrix
      * @return 2d int array representing a sparse matrix
      */
-    public static Pair getSparseMatrix(int n){
+    public static MatrixData getSparseMatrix(int n){
         int[][] matrix = new int[n][n];
         int total = (int)pow(n,2);
         int min = round(total/2);
@@ -51,7 +54,7 @@ public class Utils {
             matrix[first][second]=random.nextInt(RANGE)+1;
         }
 
-        return new Pair(matrix, total-nZeros);//matrix;
+        return new MatrixData(matrix, total-nZeros);//matrix;
     }
 
     /**
@@ -64,13 +67,13 @@ public class Utils {
      * @param n dimension of a square matrix
      * @return Pair class instance including a n*n sparse matrix and number of non zeros
      */
-    public static Pair getSparseMatrix1(float sparsity, int positions, int range, int n){
+    public static MatrixData getSparseMatrix1(double sparsity, int positions, int range, int n){
         int[][] matrix = new int[n][n];
         int total = (int)pow(n,2);
-        int min = round(sparsity*total);
+        int min = (int)round(sparsity*total);
         Random r = new Random();
         int nZeros = r.nextInt(total-min+1) + min;
-
+        boolean extraDone = false;
         if(positions == 1){
             int extra = total-nZeros-n; //extra to be placed randomly;
             int num = extra/n; int rem = extra%n;
@@ -81,15 +84,30 @@ public class Utils {
                     loop += 1;
                     rem--;
                 }
-                for (int j = 0; j < loop; j++) {
-                    int in = r.nextInt(n);
-                    while (in == i) {
-                        r.nextInt(n);
+                matrix[i][i] = r.nextInt(range) + 1;
+                if(extraDone) break;
+                for (int j = 1; j <= loop; j++) {
+                    int val = r.nextInt(range)+1;
+                    if(i+j<n){
+                        matrix[i][i+1] = val;
+                        extra--;
+                        if(extra==0){
+                            extraDone = true;
+                            break;
+                        }
                     }
-                    matrix[i][in] = r.nextInt(range) + 1;
+                    if(i-j>=0) {
+                        matrix[i][i-1] = r.nextInt(range) + 1;
+                        extra--;
+                        if(extra==0){
+                            extraDone=true;
+                            break;
+                        }
+                    }
 
                 }
-                matrix[i][i] = r.nextInt(range) + 1;
+
+
             }
         }
         else if(positions == 2){
@@ -99,7 +117,7 @@ public class Utils {
                 for(int j=0; j<end; j++){
                     matrix[i][j] = r.nextInt(range)+1;
                     nnz--;
-                    if(nnz==0) return new Pair(matrix,total-nZeros);
+                    if(nnz==0) return new MatrixData(matrix,total-nZeros);
                 }
                 end--;
             }
@@ -120,7 +138,7 @@ public class Utils {
         }
 
 
-        return new Pair(matrix, total-nZeros);
+        return new MatrixData(matrix, total-nZeros);
     }
 
     public static int[][] convertListToArray(List<List<Integer>> lists){
@@ -169,7 +187,7 @@ public class Utils {
     }
 
     public static IntMatrix convertToIntMarix(JavaSparseArray a){
-        int n = a.getLen();
+        int n = a.getDim();
         IntMatrix b = new IntMatrix(n);
         int[][] v = a.getValueA();
         int[][] i = a.getIndexA();
@@ -211,6 +229,37 @@ public class Utils {
         return c;
     }
 
+
+    public static MapMatrix getMapMatrix(int[][] values, int nnz){
+        MapMatrix mat = new MapMatrix(nnz, values.length);
+        for(int i=0; i<values.length; i++){
+            for(int j=0; j<values.length; j++){
+                if(values[i][j]>0){
+                    mat.put(i,j,values[i][j]);
+                }
+            }
+        }
+        return mat;
+    }
+
+    public static IntMatrix convertToIntMatrix(MapMatrix map){
+        IntMatrix matrix = new IntMatrix(map.getDim());
+        int nnz = map.getNnz();
+        int n = map.getDim();
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(nnz==0) return matrix;
+                if(map.getMatrix().containsKey(new Pair(i,j))){
+                    int val = map.getMatrix().get(new Pair(i,j));
+                    matrix.set(i,j,val);
+                    nnz--;
+                }
+
+            }
+        }
+        return matrix;
+    }
+
     /**
      * designed to be used in parameterised tests
      * @param structure
@@ -226,7 +275,7 @@ public class Utils {
                 Object[] ob=new Object[3];
                 // generates two matrix for each parameterised test
                 for(int j=0;j<2;j++){
-                    Pair p = Utils.getSparseMatrix(i);
+                    MatrixData p = Utils.getSparseMatrix(i);
                     int[][] matrix= p.values;//Utils.getSparseMatrix(i);
                     if(structure){
                         IntMatrix inM = new IntMatrix(matrix);
@@ -252,9 +301,9 @@ public class Utils {
                 Object[] ob=new Object[3];
                 // generates two matrix for each parameterised test
                 for(int j=0;j<2;j++){
-                    Pair p = Utils.getSparseMatrix(i);
+                    MatrixData p = Utils.getSparseMatrix(i);
                     switch (type){
-                        case "INTM": IntMatrix intm=new IntMatrix(p.values);
+                        case "INTM": IntMatrix intm=new IntMatrix(p.values, p.nnz);
                                     ob[j]=intm;
                                     break;
                         case "CRS": CRS c=convertToCRS(p.values, p.nnz);
@@ -266,11 +315,32 @@ public class Utils {
                         case "JAMA":Matrix matrix = new Matrix(convertIntToDoubleArray(p.values));
                                     ob[j]=matrix;
                                     break;
+                        case "MAP": MapMatrix map = getMapMatrix(p.values,p.nnz);
+                                    ob[j]=map;
+                                    break;
                         default: ob[j] = p;
                                 break;
 
                     }
                     //ob[j]=c;
+                }
+                ob[2]=i;
+                list.add(ob);
+            }
+        }
+        return list;
+    }
+
+    public static List<Object[]> getParamsByConditions(int min, int max, int nEach, int step, double sparsity, int position){
+        List<Object[]> list = new ArrayList<>();
+        for(int i=min; i<=max; i+=step){
+            // how many matrices of equal length we will have
+            for(int o=0; o<nEach; o++){
+                Object[] ob=new Object[3];
+                // generates two matrix for each parameterised test
+                for(int j=0;j<2;j++){
+                    MatrixData p = Utils.getSparseMatrix1(sparsity, position,RANGE, i);
+                    ob[j] = p;
                 }
                 ob[2]=i;
                 list.add(ob);
