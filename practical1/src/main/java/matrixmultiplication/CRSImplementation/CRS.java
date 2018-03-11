@@ -5,7 +5,9 @@ import java.util.Arrays;
 
 import static java.lang.StrictMath.pow;
 
-
+/**
+ * CRS implementation
+ */
 public class CRS {
     private int[] values;
     private int[] cols;
@@ -34,17 +36,6 @@ public class CRS {
     }
     public int getN(){return n;}
 
-    public int[] getValues() {
-        return values;
-    }
-
-    public int[] getCols() {
-        return cols;
-    }
-
-    public int[] getRpointer() {
-        return rpointer;
-    }
 
     public int getValue(int i){return values[i];}
     public int getRowPtr(int i){return rpointer[i];}
@@ -57,11 +48,6 @@ public class CRS {
     public void setRowPtr(int i, int r){rpointer[i]=r;}
     public void setColInd(int i, int c){cols[i]=c;}
 
-    public void printCRS(){
-        System.out.println(Arrays.toString(this.values));
-        System.out.println(Arrays.toString(this.cols));
-        System.out.println(Arrays.toString(this.rpointer));
-    }
 
     public void trimCRS(){
         int[] newVal = new int[nnz];

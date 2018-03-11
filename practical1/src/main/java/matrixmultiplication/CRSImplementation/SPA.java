@@ -1,9 +1,11 @@
 package matrixmultiplication.CRSImplementation;
 
-import matrixmultiplication.CRSImplementation.CRS;
-
 import java.util.Arrays;
 
+/**
+ * SPA - Accumulator implementation which is a temporary storage
+ * space of non zero entries in a row in an incrementally built CRS matrix
+ */
 public class SPA {
     private int[] v;
     private boolean[] b;
@@ -21,9 +23,13 @@ public class SPA {
         ncur = 0;
     }
 
-    //scatterSPA will add a scalar value to a specific position
-    //of the SPA.w vector and update the other elements accordingly.
-    //note this pos value is the column index
+    /**
+     * Method to collect non zero values in a row
+     * adds a scalar value to a specific position of the v array
+     * and update the other elements accordingly.
+     * @param value non zero entry
+     * @param pos column index
+     */
     public void scatterSPA(int value, int pos){
         if(!this.b[pos]){
             this.v[pos] = value;
@@ -33,10 +39,16 @@ public class SPA {
         else this.v[pos] += value;
     }
 
-    //gatherSPA will append the information in SPA
-    //to the matrix, returning it updated to include the latest
-    //SPA data
-    //for us, col will always be emptied after each row
+    /**
+     * Method to collect information of a computed row;
+     * appends the information in SPA to the matrix,
+     * returning it updated to include the latest
+     * SPA data and in this implementation col will always be emptied after each row.
+     * @param c matrix, product of multiplication to be updated
+     * @param rowIndex row of which SPA collected the values from
+     * @return an updated matrix
+     */
+    //
     public CRS gatherSPA(CRS c, int rowIndex){
         int curNnz = c.getNnz();
         int cptr = 0;

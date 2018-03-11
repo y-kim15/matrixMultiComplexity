@@ -1,5 +1,8 @@
 package matrixmultiplication.IntMatrixMultiplication;
 
+/**
+ * Advanced Multiplier implementation
+ */
 public class AdvancedMultiplier {
     public String toString() {
         return "BasicMultiplier";

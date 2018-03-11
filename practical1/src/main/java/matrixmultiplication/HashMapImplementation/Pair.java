@@ -1,6 +1,8 @@
-package matrixmultiplication;
+package matrixmultiplication.HashMapImplementation;
 
-//credit
+/**
+ * Custom class used for MapMatrix, to store x,y index values of an entry
+ */
 //https://stackoverflow.com/questions/28953856/accessing-a-hashmap-value-with-a-custom-pair-object-as-a-key
 public class Pair {
 

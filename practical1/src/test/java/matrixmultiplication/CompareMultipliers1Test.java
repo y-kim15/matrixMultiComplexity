@@ -16,8 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Test for Task 4
  * This test will compare different matrix multiplication algorithms
- * using IntMatrix class.basic, improve, advanced etc.
+ * using IntMatrix class: basic, improved, and advanced.
  */
 @RunWith(Parameterized.class)
 public class CompareMultipliers1Test {
@@ -35,10 +36,10 @@ public class CompareMultipliers1Test {
     @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
         double spar; int matrixType;
-        if(System.getProperty("sparsity") == null)spar = sparsity;
+        if(System.getProperty("sparsity").isEmpty())spar = sparsity;
         else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
 
-        if(System.getProperty("matrixType") == null) matrixType = position;
+        if(System.getProperty("matrixType").isEmpty()) matrixType = position;
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
         System.out.println("pass parameters with sparsity " + spar);
@@ -47,7 +48,6 @@ public class CompareMultipliers1Test {
         fileName = Utils.getFileName("comp1", spar, matrixType);
 
         return Utils.getParamsByConditions(500,1000, repeat,50, spar, matrixType);
-        //return Utils.parametersForTestMatrixMultiplication(true);
     }
 
     private MatrixData a;
@@ -72,7 +72,6 @@ public class CompareMultipliers1Test {
             e.getMessage();
             System.out.println(e.getStackTrace());
         }
-        //Utils.loadProperties();
 
     }
 

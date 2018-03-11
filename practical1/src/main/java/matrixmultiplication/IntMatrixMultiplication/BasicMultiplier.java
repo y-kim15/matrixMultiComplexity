@@ -1,5 +1,8 @@
 package matrixmultiplication.IntMatrixMultiplication;
 
+/**
+ * Basic Algorithm and improved basic algorithm implementations
+ */
 public class BasicMultiplier {
 
     public String toString() {
@@ -23,6 +26,13 @@ public class BasicMultiplier {
         return result;
     }
 
+    /**
+     * Method which checks if the entry is non zero and
+     * skips operations if zero
+     * @param a matrix
+     * @param b matrix
+     * @return matrix, a product of a and b
+     */
     public IntMatrix improvedMultiply(IntMatrix a, IntMatrix b){
         //validity check
         int dim = a.getDim();

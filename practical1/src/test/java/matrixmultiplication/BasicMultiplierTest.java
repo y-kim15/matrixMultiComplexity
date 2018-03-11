@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Test for Task 2, tests Basic Algorithm
+ */
 @RunWith(Parameterized.class)
 public class BasicMultiplierTest{
     private BasicMultiplier testSubject = new BasicMultiplier();
@@ -25,13 +28,19 @@ public class BasicMultiplierTest{
     private static int repeat = 20;
     private static double sparsity = 0.75;
     private static int position = 0;
-    @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
+
+    /**
+     * Generates matrices used according to command line arguments
+     * or using default if the arguments are not provided.
+     * @return output of getParamsByConditions method (a list of arrays of 2 matrices)
+     */
+    @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
         double spar; int matrixType;
-        if(System.getProperty("sparsity") == null)spar = sparsity;
+        if(System.getProperty("sparsity").isEmpty()) spar = sparsity;
         else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
 
-        if(System.getProperty("matrixType") == null) matrixType = position;
+        if(System.getProperty("matrixType").isEmpty()) matrixType = position;
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
         System.out.println("pass parameters with sparsity " + spar);
@@ -51,6 +60,7 @@ public class BasicMultiplierTest{
         b = inB;
         n = len;
     }
+
     @BeforeClass
     public static void prepare() throws IOException
     {
@@ -63,7 +73,6 @@ public class BasicMultiplierTest{
             e.getMessage();
             System.out.println(e.getStackTrace());
         }
-        //Utils.loadProperties();
 
     }
 

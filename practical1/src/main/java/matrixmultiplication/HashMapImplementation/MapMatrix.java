@@ -1,7 +1,10 @@
-package matrixmultiplication;
+package matrixmultiplication.HashMapImplementation;
 
 import java.util.HashMap;
 
+/**
+ * Implementation of Matrix using HashMap
+ */
 public class MapMatrix {
     private HashMap<Pair, Integer> matrix;
     private int nnz;

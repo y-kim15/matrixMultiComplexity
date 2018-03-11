@@ -3,6 +3,7 @@ package matrixmultiplication;
 import Jama.Matrix;
 import matrixmultiplication.CRSImplementation.CRS;
 import matrixmultiplication.CRSImplementation.CRSMultiplier;
+import matrixmultiplication.HashMapImplementation.MapMatrix;
 import matrixmultiplication.JSAImplementation.JavaSparseArray;
 import matrixmultiplication.IntMatrixMultiplication.BasicMultiplier;
 import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
@@ -18,36 +19,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Test for Task 4
+ * This will test the use of various matrix implementation
+ * and record execution time of conversion and basic algorithm multiplication.
+ */
 @RunWith(Parameterized.class)
 public class CompareMultipliers2Test {
+    private BasicMultiplier testSubject = new BasicMultiplier();
     private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime = new long[]{0,0,0,0,0};
     private static int count = 0;
-    private static int repeat = 30;
+    private static int repeat = 25;
     private static double sparsity = 0.75;
     private static int position = 0;
 
     @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
         double spar; int matrixType;
-        if(System.getProperty("sparsity") == null)spar = sparsity;
+        if(System.getProperty("sparsity").isEmpty())spar = sparsity;
         else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
 
-        if(System.getProperty("matrixType") == null) matrixType = position;
+        if(System.getProperty("matrixType").isEmpty()) matrixType = position;
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
         fileName = Utils.getFileName("comp2", spar, matrixType);
 
-        return Utils.getParamsByConditions(50,1000, repeat,50, spar, matrixType);
+        return Utils.getParamsByConditions(500,1000, repeat,50, spar, matrixType);
 
     }
 
     private MatrixData a;
     private MatrixData b;
-    //private CRS c;
-    private int len; //same value as nEach //repeat could go to instance init?
+    private int len;
 
 
     public CompareMultipliers2Test(MatrixData a, MatrixData b, int len){
@@ -81,7 +87,7 @@ public class CompareMultipliers2Test {
         long startTime = System.nanoTime();
         IntMatrix m1 = Utils.convertToIntMatrix(jsa1);
         IntMatrix m2 = Utils.convertToIntMatrix(jsa2);
-        new BasicMultiplier().multiply(m1,m2);
+        testSubject.multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[0] += (endTime - startTime)/100000;
     }
@@ -94,14 +100,13 @@ public class CompareMultipliers2Test {
         long startTime = System.nanoTime();
         IntMatrix m1 = Utils.convertToIntMatrix(map1);
         IntMatrix m2 = Utils.convertToIntMatrix(map2);
-        new BasicMultiplier().multiply(m1,m2);
+        testSubject.multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[1] += (endTime - startTime)/100000;
 
     }
 
     @Test
-    //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
     public void testCRSMultiply(){
         System.out.println("crs");
         CRS crs1 = Utils.getCRS(a.values,a.nnz);
@@ -120,14 +125,12 @@ public class CompareMultipliers2Test {
         IntMatrix newB = new IntMatrix(b.values);
 
         long startTime = System.nanoTime();
-        new BasicMultiplier().multiply(newA, newB);
+        testSubject.multiply(newA, newB);
         long endTime = System.nanoTime();
         totalTime[3] += (endTime - startTime)/100000;
 
 
     }
-
-
 
     @Test
     public void testJamaMultiply() throws IOException{
@@ -141,8 +144,6 @@ public class CompareMultipliers2Test {
         count++;
 
     }
-
-
 
     @After
     public void writeToCSV() throws IOException{

@@ -1,13 +1,11 @@
 package matrixmultiplication;
 
-import Jama.Matrix;
 import matrixmultiplication.CRSImplementation.CRS;
+import matrixmultiplication.HashMapImplementation.MapMatrix;
+import matrixmultiplication.HashMapImplementation.Pair;
 import matrixmultiplication.JSAImplementation.JavaSparseArray;
 import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
-import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -18,24 +16,29 @@ import java.util.stream.IntStream;
 import static java.lang.Math.pow;
 import static java.lang.Math.round;
 
+/**
+ * Class containing all utilised methods for computation and testing
+ */
 public class Utils {
+    // the maximum entry value of a matrix
     private static final int RANGE=10;
+
     /**
      * Generates a sparse matrix according to controlled variables
      * @param sparsity a float value determining the minimal sparsity of the matrix. The value represents the proportion of zero entries
      *                 the value should be at least 0.5.
      * @param positions a integer value denoting the structure of the matrix 0) random (equivalent to getSparseMatrix method)
-     *                 1) a diagonal matrix 2) an upper triangle matrix (clustered)
+     *                 1) a band matrix 2) an upper triangle matrix (clustered)
      * @param range maximum integer value for matrix entry
      * @param n dimension of a square matrix
-     * @return Pair class instance including a n*n sparse matrix and number of non zeros
+     * @return MatrixData class instance including a n*n sparse matrix and the number of non zeros
      */
-    public static MatrixData getSparseMatrix1(double sparsity, int positions, int range, int n){
+    public static MatrixData getSparseMatrix(double sparsity, int positions, int range, int n){
         int[][] matrix = new int[n][n];
         int total = (int)pow(n,2);
-        //int min = (int)round(sparsity*total);
+
         Random r = new Random();
-        int nZeros = (int)round(sparsity*total);//r.nextInt(total-min+1) + min;
+        int nZeros = (int)round(sparsity*total);
         boolean extraDone = false;
         if(positions == 1){
             int nnz = total-nZeros;
@@ -95,7 +98,6 @@ public class Utils {
             for(int i=0; i<total-nZeros; i++){//n*n
                 int val = list.get(i);
                 int first=(val/n); int second=(val%n);
-                //if(i<nZeros) matrix[first][second]=0;
                 matrix[first][second]=r.nextInt(RANGE)+1;
             }
 
@@ -105,28 +107,28 @@ public class Utils {
         return new MatrixData(matrix, total-nZeros);
     }
 
-    public static int[][] convertListToArray(List<List<Integer>> lists){
-        int[][] array = new int[lists.size()][];
-        int[] blankArray=new int[0];
-        for(int i=0; i < lists.size(); i++) {
-            blankArray = ArrayUtils.toPrimitive((Integer[])lists.get(i).toArray());//lists.get(i).toArray(blankArray);
-            array[i] = blankArray;
-            //array[i] = lists.get(i).toArray(blankArray);
-        }
-        return array;
-    }
 
-    public static double[][] convertIntToDoubleArray(int[][] values){
-        int n = values.length;
+    /**
+     * Converts integer array to double array by iteration
+     * @param array integer array
+     * @return double array containing the values from array
+     */
+    public static double[][] convertIntToDoubleArray(int[][] array){
+        int n = array.length;
         double[][] converted = new double[n][n];
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
-                converted[i][j] = (double)values[i][j];
+                converted[i][j] = (double)array[i][j];
             }
         }
         return converted;
     }
 
+    /**
+     * Creates JSA instance as a matrix
+     * @param matrix integer 2D array containing entry values for JSA
+     * @return JSA instance
+     */
     public static JavaSparseArray getJSA(int[][] matrix){
         int[][] values = new int[matrix.length][];
         int[][] index = new int[matrix.length][];
@@ -149,7 +151,12 @@ public class Utils {
         }
         return new JavaSparseArray(values, index,nnz);
     }
-    //n(c_1+n(c_2+c_3nnz))
+
+    /**
+     * Converts a JSA instance to an IntMatrix matrix
+     * @param a a JSA instance
+     * @return a converted IntMatrix matrix
+     */
     public static IntMatrix convertToIntMatrix(JavaSparseArray a){
         int n = a.getDim();
         IntMatrix b = new IntMatrix(n);
@@ -165,13 +172,18 @@ public class Utils {
                     pos++;
                     if(pos==ind.length) pos--;
                 }
-                //else b.set(j,k,0);
 
             }
         }
         return b;
     }
 
+    /**
+     * Creates an CRS instance of a matrix
+     * @param values integer 2d array containing entries of a matrix
+     * @param nnz the number of non zero values in the matrix
+     * @return a CRS instance containing non zero values
+     */
     public static CRS getCRS(int[][] values, int nnz){
         int n = values.length;
         CRS c = new CRS(n,nnz);
@@ -193,7 +205,12 @@ public class Utils {
         return c;
     }
 
-
+    /**
+     * Creates an MapMatrix instance of a matrix
+     * @param values integer 2d array containing entries of a matrix
+     * @param nnz the number of non zero values in the matrix
+     * @return a MapMatrix instance containing the matrix
+     */
     public static MapMatrix getMapMatrix(int[][] values, int nnz){
         MapMatrix mat = new MapMatrix(nnz, values.length);
         for(int i=0; i<values.length; i++){
@@ -205,7 +222,12 @@ public class Utils {
         }
         return mat;
     }
-    //n^2(c_1+c_2*nnz)
+
+    /**
+     * Converts a MapMatrix instance to an IntMatrix matrix
+     * @param map instance to convert
+     * @return converted
+     */
     public static IntMatrix convertToIntMatrix(MapMatrix map){
         IntMatrix matrix = new IntMatrix(map.getDim());
         HashMap<Pair,Integer> map1 = map.getMatrix();
@@ -226,7 +248,18 @@ public class Utils {
     }
 
 
-    public static List<Object[]> getParamsByConditions(int min, int max, int nEach, int step, double sparsity, int position){
+    /**
+     * Creates a list of lists of objects (Matrices) to be used for testing.
+     * Generates matrices according to the parameter values
+     * @param min minimum dimension of a matrix
+     * @param max maximum dimension of a matrix
+     * @param nEach the number of matrices to be generated for each chosen length
+     * @param step the step size to increase from minimum to maximum dimension for each iteration
+     * @param sparsity double value to define sparsity of a matrix
+     * @param matrixType type of an matrix to generate
+     * @return an iterable list containing matrices data for testing
+     */
+    public static List<Object[]> getParamsByConditions(int min, int max, int nEach, int step, double sparsity, int matrixType){
         List<Object[]> list = new ArrayList<>();
         for(int i=min; i<=max; i+=step){
             // how many matrices of equal length we will have
@@ -234,7 +267,7 @@ public class Utils {
                 Object[] ob=new Object[3];
                 // generates two matrix for each parameterised test
                 for(int j=0;j<2;j++){
-                    MatrixData p = Utils.getSparseMatrix1(sparsity, position,RANGE, i);
+                    MatrixData p = Utils.getSparseMatrix(sparsity, matrixType,RANGE, i);
                     ob[j] = p;
                 }
                 ob[2]=i;
@@ -244,8 +277,13 @@ public class Utils {
         return list;
     }
 
-
-    //https://www.mkyong.com/java/how-to-export-data-to-csv-file-java/
+    /**
+     * writes input line to a file
+     * attributed to : https://www.mkyong.com/java/how-to-export-data-to-csv-file-java/
+     * @param writer file to write
+     * @param inputs strings to write
+     * @throws IOException when file is not defined
+     */
     public static void writeCSVLine(FileWriter writer, List<String> inputs)throws IOException{
         StringBuilder sb = new StringBuilder();
         sb.append(inputs.get(0));
@@ -264,6 +302,13 @@ public class Utils {
 
     }
 
+    /**
+     * Constructs a meaningful file name for test output
+     * @param testName name of the test
+     * @param sparsity sparsity of matrices used for testing
+     * @param matrixType type of matrices used for testing
+     * @return file name built
+     */
     public static String getFileName(String testName, double sparsity, int matrixType){
         StringBuilder sb = new StringBuilder();
         sb.append("./output/");

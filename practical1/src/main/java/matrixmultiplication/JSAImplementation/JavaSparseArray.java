@@ -1,11 +1,8 @@
 package matrixmultiplication.JSAImplementation;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Implementation of Matrix as a Java Sparse Array
+ */
 public class JavaSparseArray {
     private int[][] valueA;
     private int[][] indexA;

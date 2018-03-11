@@ -1,12 +1,13 @@
 package matrixmultiplication.CRSImplementation;
 
-import static java.lang.StrictMath.round;
-
+/**
+ * CRS Multiplier for Multiplication of Matrices implemented by CRS
+ */
 public class CRSMultiplier {
     public String toString() {
         return "CRSMultiplier";
     }
-    //estimated no of nnz is 1.5*(a.nnz+b.nnz)
+
     //note we always follow first element in index 0 not 1
     public CRS multiply(CRS a, CRS b) {
         int n = a.getN();
