@@ -35,7 +35,7 @@ public class CompareMultipliers3Test {
     private static int count = 0;
     private static int repeat = 30;
     private static double sparsity = 0.75;
-    private static int position = 2;
+    private static int position = 0;
 
     @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
