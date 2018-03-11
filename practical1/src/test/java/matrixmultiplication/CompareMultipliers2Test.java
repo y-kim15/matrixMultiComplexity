@@ -20,19 +20,28 @@ import java.util.List;
 
 @RunWith(Parameterized.class)
 public class CompareMultipliers2Test {
-    private static String fileName = "./compare_2_default_band_mul_output.csv";
+    private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime = new long[]{0,0,0,0,0};
     private static int count = 0;
     private static int repeat = 30;
     private static double sparsity = 0.75;
-    private static int position = 1;
+    private static int position = 0;
 
-    @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
+    @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
+        double spar; int matrixType;
+        if(System.getProperty("sparsity") == null)spar = sparsity;
+        else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
 
-        return Utils.getParamsByConditions(500,1000,repeat, 50, sparsity, position);
+        if(System.getProperty("matrixType") == null) matrixType = position;
+        else matrixType = Integer.valueOf(System.getProperty("matrixType"));
+
+        fileName = Utils.getFileName("comp2", spar, matrixType);
+
+        return Utils.getParamsByConditions(50,1000, repeat,50, spar, matrixType);
+
     }
 
     private MatrixData a;

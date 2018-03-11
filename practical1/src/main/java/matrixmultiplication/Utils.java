@@ -76,14 +76,14 @@ public class Utils {
         }
         else if(positions == 2){
             int nnz = total-nZeros;
-            int end = n;
+            int start = 0;
             for(int i=0; i<n; i++){
-                for(int j=0; j<end; j++){
+                for(int j=start; j<n; j++){
                     matrix[i][j] = r.nextInt(range)+1;
                     nnz--;
                     if(nnz==0) return new MatrixData(matrix,total-nZeros);
                 }
-                end--;
+                start++;
             }
         }
         else{
@@ -149,7 +149,7 @@ public class Utils {
         }
         return new JavaSparseArray(values, index,nnz);
     }
-
+    //n(c_1+n(c_2+c_3nnz))
     public static IntMatrix convertToIntMatrix(JavaSparseArray a){
         int n = a.getDim();
         IntMatrix b = new IntMatrix(n);
@@ -165,7 +165,7 @@ public class Utils {
                     pos++;
                     if(pos==ind.length) pos--;
                 }
-                else b.set(j,k,0);
+                //else b.set(j,k,0);
 
             }
         }
@@ -205,16 +205,17 @@ public class Utils {
         }
         return mat;
     }
-
+    //n^2(c_1+c_2*nnz)
     public static IntMatrix convertToIntMatrix(MapMatrix map){
         IntMatrix matrix = new IntMatrix(map.getDim());
+        HashMap<Pair,Integer> map1 = map.getMatrix();
         int nnz = map.getNnz();
         int n = map.getDim();
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
                 if(nnz==0) return matrix;
                 if(map.getMatrix().containsKey(new Pair(i,j))){
-                    int val = map.getMatrix().get(new Pair(i,j));
+                    int val = map1.get(new Pair(i,j));
                     matrix.set(i,j,val);
                     nnz--;
                 }
@@ -261,5 +262,24 @@ public class Utils {
             System.out.println("Failed to write input line to CSV");
         }
 
+    }
+
+    public static String getFileName(String testName, double sparsity, int matrixType){
+        StringBuilder sb = new StringBuilder();
+        sb.append("./output/");
+        sb.append(testName);
+        sb.append("_");
+        sb.append(sparsity);
+        sb.append("_");
+        switch (matrixType){
+            case 0: sb.append("random");
+                    break;
+            case 1: sb.append("band");
+                    break;
+            case 2: sb.append("triangle");
+                    break;
+        }
+        sb.append("_mul_output.csv");
+        return sb.toString();
     }
 }

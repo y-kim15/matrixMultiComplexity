@@ -1,5 +1,6 @@
 package matrixmultiplication;
 
+import Jama.Matrix;
 import matrixmultiplication.CRSImplementation.CRS;
 import matrixmultiplication.CRSImplementation.CRSMultiplier;
 import matrixmultiplication.IntMatrixMultiplication.AdvancedMultiplier;
@@ -22,19 +23,27 @@ import java.util.List;
  */
 @RunWith(Parameterized.class)
 public class CompareMultipliers3Test {
-    private static String fileName = "./compare_3_default_random_mul_output.csv";
+    private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
-    private static long[] totalTime = new long[]{0,0,0,0};
+    private static long[] totalTime = new long[]{0,0,0,0,0};
     private static int count = 0;
     private static int repeat = 30;
     private static double sparsity = 0.75;
-    private static int position = 0;
+    private static int position = 2;
 
-    @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
+    @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
+        double spar; int matrixType;
+        if(System.getProperty("sparsity") == null)spar = sparsity;
+        else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
 
-        return Utils.getParamsByConditions(500,1000, repeat,50, sparsity, position);
+        if(System.getProperty("matrixType") == null) matrixType = position;
+        else matrixType = Integer.valueOf(System.getProperty("matrixType"));
+
+        fileName = Utils.getFileName("comp31", spar, matrixType);
+
+        return Utils.getParamsByConditions(500,1000, repeat,50, spar, matrixType);
     }
 
     private MatrixData a;
@@ -50,10 +59,13 @@ public class CompareMultipliers3Test {
     @BeforeClass
     public static void prepare() throws IOException
     {
+        System.out.println("before class");
+        //String sparsity = System.getProperty("sparsity");
+        //double val = Math.round(Double.parseDouble(sparsity)*100D)/100D;
         try {
             Files.deleteIfExists(Paths.get(fileName));
             writer = new FileWriter(fileName);
-            Utils.writeCSVLine(writer, Arrays.asList("Matrix Dim n", "JSA", "MapMatrix", "CRS", "IntMatrix"));
+            Utils.writeCSVLine(writer, Arrays.asList("Matrix Dim n", "JSA", "MapMatrix", "CRS", "IntMatrix", "Jama"));
         }
         catch(IOException e){
             e.getMessage();
@@ -65,6 +77,9 @@ public class CompareMultipliers3Test {
 
     @Before
     public void passInput(){
+        IntMatrix a1 = new IntMatrix(a.values);
+        IntMatrix b1 = new IntMatrix(b.values);
+
     }
     @Test
     public void testJSAMultiply(){
@@ -114,14 +129,25 @@ public class CompareMultipliers3Test {
         IntMatrix newB = new IntMatrix(b.values);
 
         long startTime = System.nanoTime();
-        new AdvancedMultiplier().multiply(newA, newB);
+        IntMatrix c = new AdvancedMultiplier().multiply(newA, newB);
         long endTime = System.nanoTime();
         totalTime[3] += (endTime - startTime)/100000;
-        count++;
+        //count++;
 
     }
 
+    @Test
+    public void testJamaMultiply() throws IOException{
+        //System.out.println("jama");
+        Matrix a1 = new Matrix(Utils.convertIntToDoubleArray(a.values));
+        Matrix b1 = new Matrix(Utils.convertIntToDoubleArray(b.values));
+        long startTime = System.nanoTime();
+        a1.times(b1);
+        long endTime   = System.nanoTime();
+        totalTime[4] += (endTime - startTime)/100000;
+        count++;
 
+    }
 
 
 

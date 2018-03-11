@@ -23,7 +23,7 @@ import java.util.List;
 public class CompareMultipliers1Test {
     private BasicMultiplier testSubject = new BasicMultiplier();
     private AdvancedMultiplier testSubject2 = new AdvancedMultiplier();
-    private static String fileName = "./intMatrix_mul_compare_output.csv";
+    private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime=new long[]{0,0,0};
@@ -31,9 +31,22 @@ public class CompareMultipliers1Test {
     private static int repeat = 30;
     private static double sparsity = 0.75;
     private static int position = 0;
-    @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
+
+    @Parameterized.Parameters()
     public static Iterable<Object[]> data() {
-        return Utils.getParamsByConditions(500,1000,repeat,50,sparsity,position);
+        double spar; int matrixType;
+        if(System.getProperty("sparsity") == null)spar = sparsity;
+        else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
+
+        if(System.getProperty("matrixType") == null) matrixType = position;
+        else matrixType = Integer.valueOf(System.getProperty("matrixType"));
+
+        System.out.println("pass parameters with sparsity " + spar);
+        System.out.println("with matrix type value "+ matrixType);
+
+        fileName = Utils.getFileName("comp1", spar, matrixType);
+
+        return Utils.getParamsByConditions(500,1000, repeat,50, spar, matrixType);
         //return Utils.parametersForTestMatrixMultiplication(true);
     }
 

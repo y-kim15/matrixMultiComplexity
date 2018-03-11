@@ -17,18 +17,29 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class BasicMultiplierTest{
     private BasicMultiplier testSubject = new BasicMultiplier();
-    private static String fileName = "./basic_mul_output.csv";
+    private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long totalTime=0;
     private static int count = 0;
     private static int repeat = 20;
     private static double sparsity = 0.75;
-    private static int condition = 0;
+    private static int position = 0;
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
-        return Utils.getParamsByConditions(300,1000,repeat,50,sparsity,condition);
-        //return Utils.parametersForTestMatrixMultiplication(true);
+        double spar; int matrixType;
+        if(System.getProperty("sparsity") == null)spar = sparsity;
+        else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
+
+        if(System.getProperty("matrixType") == null) matrixType = position;
+        else matrixType = Integer.valueOf(System.getProperty("matrixType"));
+
+        System.out.println("pass parameters with sparsity " + spar);
+        System.out.println("with matrix type value "+ matrixType);
+
+        fileName = Utils.getFileName("basic", spar, matrixType);
+
+        return Utils.getParamsByConditions(300,1000, repeat,50, spar, matrixType);
     }
 
     private MatrixData a;
