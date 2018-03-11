@@ -3,9 +3,7 @@ package matrixmultiplication;
 import Jama.Matrix;
 import matrixmultiplication.CRSImplementation.CRS;
 import matrixmultiplication.CRSImplementation.CRSMultiplier;
-import matrixmultiplication.IntMatrixMultiplication.AdvancedMultiplier;
 import matrixmultiplication.JSAImplementation.JavaSparseArray;
-import matrixmultiplication.JSAImplementation.JavaSparseArrayMultiplier;
 import matrixmultiplication.IntMatrixMultiplication.BasicMultiplier;
 import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 import org.junit.*;
@@ -22,14 +20,14 @@ import java.util.List;
 
 @RunWith(Parameterized.class)
 public class CompareMultipliers2Test {
-    private static String fileName = "./compare_dataStruct_mul_output.csv";
+    private static String fileName = "./compare_2_default_band_mul_output.csv";
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime = new long[]{0,0,0,0,0};
     private static int count = 0;
     private static int repeat = 30;
     private static double sparsity = 0.75;
-    private static int position = 0;
+    private static int position = 1;
 
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
@@ -69,11 +67,11 @@ public class CompareMultipliers2Test {
     @Test
     public void testJSAMultiply(){
         System.out.println("jsa");
-        JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
-        JavaSparseArray jsa2 = Utils.convertToJSA(b.values);
+        JavaSparseArray jsa1 = Utils.getJSA(a.values);
+        JavaSparseArray jsa2 = Utils.getJSA(b.values);
         long startTime = System.nanoTime();
-        IntMatrix m1 = Utils.convertToIntMarix(jsa1);
-        IntMatrix m2 = Utils.convertToIntMarix(jsa2);
+        IntMatrix m1 = Utils.convertToIntMatrix(jsa1);
+        IntMatrix m2 = Utils.convertToIntMatrix(jsa2);
         new BasicMultiplier().multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[0] += (endTime - startTime)/100000;
@@ -97,8 +95,8 @@ public class CompareMultipliers2Test {
     //@BenchmarkOptions(benchmarkRounds = 5, warmupRounds = 4)
     public void testCRSMultiply(){
         System.out.println("crs");
-        CRS crs1 = Utils.convertToCRS(a.values,a.nnz);
-        CRS crs2 = Utils.convertToCRS(b.values, b.nnz);
+        CRS crs1 = Utils.getCRS(a.values,a.nnz);
+        CRS crs2 = Utils.getCRS(b.values, b.nnz);
         long startTime = System.nanoTime();
         new CRSMultiplier().multiply(crs1,crs2);
         long endTime   = System.nanoTime();

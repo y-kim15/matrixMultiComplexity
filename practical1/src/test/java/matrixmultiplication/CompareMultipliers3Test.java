@@ -1,13 +1,10 @@
 package matrixmultiplication;
 
-import Jama.Matrix;
 import matrixmultiplication.CRSImplementation.CRS;
 import matrixmultiplication.CRSImplementation.CRSMultiplier;
 import matrixmultiplication.IntMatrixMultiplication.AdvancedMultiplier;
-import matrixmultiplication.IntMatrixMultiplication.BasicMultiplier;
 import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 import matrixmultiplication.JSAImplementation.JavaSparseArray;
-import matrixmultiplication.JSAImplementation.JavaSparseArrayMultiplier;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -25,20 +22,19 @@ import java.util.List;
  */
 @RunWith(Parameterized.class)
 public class CompareMultipliers3Test {
-    private static String fileName = "./compare_dataStruct2_mul_output.csv";
+    private static String fileName = "./compare_3_default_random_mul_output.csv";
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime = new long[]{0,0,0,0};
     private static int count = 0;
-    private static int repeat = 35;
+    private static int repeat = 30;
     private static double sparsity = 0.75;
-    private static int position = 1;
-    private static String form = "diagonal";
+    private static int position = 0;
 
     @Parameterized.Parameters()//name= "{index}: {0}, {1}, n = {2}")
     public static Iterable<Object[]> data() {
 
-        return Utils.getParamsByConditions(300,800, repeat,50, sparsity, position);
+        return Utils.getParamsByConditions(500,1000, repeat,50, sparsity, position);
     }
 
     private MatrixData a;
@@ -57,7 +53,6 @@ public class CompareMultipliers3Test {
         try {
             Files.deleteIfExists(Paths.get(fileName));
             writer = new FileWriter(fileName);
-            Utils.writeCSVLine(writer, Arrays.asList("Sparsity", Double.toString(sparsity), "Positions", Integer.toString(position), form));
             Utils.writeCSVLine(writer, Arrays.asList("Matrix Dim n", "JSA", "MapMatrix", "CRS", "IntMatrix"));
         }
         catch(IOException e){
@@ -73,12 +68,12 @@ public class CompareMultipliers3Test {
     }
     @Test
     public void testJSAMultiply(){
-        System.out.println("JSAmultiply");
-        JavaSparseArray jsa1 = Utils.convertToJSA(a.values);
-        JavaSparseArray jsa2 = Utils.convertToJSA(b.values);
+        //System.out.println("JSAmultiply");
+        JavaSparseArray jsa1 = Utils.getJSA(a.values);
+        JavaSparseArray jsa2 = Utils.getJSA(b.values);
         long startTime = System.nanoTime();
-        IntMatrix m1 = Utils.convertToIntMarix(jsa1);
-        IntMatrix m2 = Utils.convertToIntMarix(jsa2);
+        IntMatrix m1 = Utils.convertToIntMatrix(jsa1);
+        IntMatrix m2 = Utils.convertToIntMatrix(jsa2);
         new AdvancedMultiplier().multiply(m1,m2);
         long endTime   = System.nanoTime();
         totalTime[0] += (endTime - startTime)/100000;
@@ -89,7 +84,7 @@ public class CompareMultipliers3Test {
     public void testMapMatrixMultiply() throws IOException {
         MapMatrix map1 = Utils.getMapMatrix(a.values, a.nnz);
         MapMatrix map2 = Utils.getMapMatrix(b.values, b.nnz);
-        System.out.println("MapMatrixMultiply");
+        //System.out.println("MapMatrixMultiply");
         long startTime = System.nanoTime();
         IntMatrix m1 = Utils.convertToIntMatrix(map1);
         IntMatrix m2 = Utils.convertToIntMatrix(map2);
@@ -101,9 +96,9 @@ public class CompareMultipliers3Test {
 
     @Test
     public void testCRSMultiply(){ //testCRS
-        System.out.println("CRS multiply");
-        CRS crs1 = Utils.convertToCRS(a.values,a.nnz);
-        CRS crs2 = Utils.convertToCRS(b.values,b.nnz);
+        //System.out.println("CRS multiply");
+        CRS crs1 = Utils.getCRS(a.values,a.nnz);
+        CRS crs2 = Utils.getCRS(b.values,b.nnz);
 
         long startTime = System.nanoTime();
         new CRSMultiplier().multiply(crs1,crs2);
@@ -114,7 +109,7 @@ public class CompareMultipliers3Test {
 
     @Test
     public void testIntMatrixMultiply(){
-        System.out.println("IntMatrix multiply");;
+        //System.out.println("IntMatrix multiply");;
         IntMatrix newA = new IntMatrix(a.values);
         IntMatrix newB = new IntMatrix(b.values);
 

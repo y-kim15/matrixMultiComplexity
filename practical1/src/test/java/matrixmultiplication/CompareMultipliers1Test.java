@@ -18,9 +18,7 @@ import java.util.List;
 /**
  * This test will compare different matrix multiplication algorithms
  * using IntMatrix class.basic, improve, advanced etc.
- * **create second to compare intmatrix, crs, jama and jsa
  */
-
 @RunWith(Parameterized.class)
 public class CompareMultipliers1Test {
     private BasicMultiplier testSubject = new BasicMultiplier();
@@ -82,13 +80,13 @@ public class CompareMultipliers1Test {
         totalTime[0]+= time;
 
         startTime = System.nanoTime();
-        testSubject.multiply(m1,m2);
+        testSubject.improvedMultiply(m1,m2);
         endTime   = System.nanoTime();
         time = (endTime - startTime)/100000;
         totalTime[1]+= time;
 
         startTime = System.nanoTime();
-        testSubject.multiply(m1,m2);
+        testSubject2.multiply(m1,m2);
         endTime   = System.nanoTime();
         time = (endTime - startTime)/100000;
         totalTime[2]+= time;
@@ -98,7 +96,7 @@ public class CompareMultipliers1Test {
     @After
     public void writeToCSV()throws IOException{
         count++;
-        if(count%repeat==0){
+        if(count==repeat){
             for(int i=0; i<totalTime.length;i++){
                 long average = totalTime[i]/repeat;
                 inputBuffer.add(Long.toString(average));
