@@ -6,6 +6,8 @@ import matrixmultiplication.HashMapImplementation.Pair;
 import matrixmultiplication.JSAImplementation.JavaSparseArray;
 import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -21,7 +23,9 @@ import static java.lang.Math.round;
  */
 public class Utils {
     // the maximum entry value of a matrix
-    private static final int RANGE=10;
+    private static final int RANGE=9;
+    //private static final int SEED = 0;
+    //private static Random r = new Random(SEED);
 
     /**
      * Generates a sparse matrix according to controlled variables
@@ -98,7 +102,7 @@ public class Utils {
             for(int i=0; i<total-nZeros; i++){//n*n
                 int val = list.get(i);
                 int first=(val/n); int second=(val%n);
-                matrix[first][second]=r.nextInt(RANGE)+1;
+                matrix[first][second]=r.nextInt(range)+1;
             }
 
         }
@@ -309,9 +313,20 @@ public class Utils {
      * @param matrixType type of matrices used for testing
      * @return file name built
      */
-    public static String getFileName(String testName, double sparsity, int matrixType){
+    public static String getFileName(String testName, double sparsity, int matrixType, boolean inOrOut){
         StringBuilder sb = new StringBuilder();
-        sb.append("./output/");
+        if(inOrOut){
+            sb.append("./data/");
+            switch (testName){
+                case "basic": sb.append("Basic/");
+                                break;
+                case "comp": sb.append("CompareInput/");
+                            break;
+            }
+        }
+        else {
+            sb.append("./output/");
+        }
         sb.append(testName);
         sb.append("_");
         sb.append(sparsity);
@@ -324,7 +339,63 @@ public class Utils {
             case 2: sb.append("triangle");
                     break;
         }
-        sb.append("_mul_output.csv");
+        if(inOrOut) sb.append("_input.csv");
+        else sb.append("_output.csv");
         return sb.toString();
+    }
+
+
+    /**
+     * Reads CSV file containing matrix inputs, initially written using Data.java
+     * Format the input to be passed to parameterised tests
+     * @param filepath path to the file to read
+     * @param min the minimum dimension
+     * @param max the maximum dimension
+     * @param repeat the number of repetition
+     * @param step the step size to increase dimension
+     * @return a list of arrays of MatrixData
+     * @throws IOException when file path is invalid
+     */
+    public static List<Object[]> getParams(String filepath, int min, int max, int repeat, int step)throws IOException{
+
+        List<Object[]> list = new ArrayList<>();
+        try {
+            BufferedReader r = new BufferedReader(new FileReader(filepath));
+            String line = "";
+
+            for(int i=min; i<=max; i+=step){
+                // how many matrices of equal length we will have
+                for(int o=0; o<repeat; o++){
+                    Object[] ob=new Object[3];
+                    // generates two matrix for each parameterised test
+                    for(int j=0;j<2;j++){
+                        int[][] values = new int[i][i];
+                        line = r.readLine();
+                        String[] vals = line.split(",");
+                        int nnz = 0;
+                        for(int s=0; s < i; s++){
+                            int upto = i;
+                            if(s == i-1){
+                                String[] split = vals[s].split(";");
+                                upto = split[0].length();
+                                nnz = Integer.parseInt(split[1]);//Character.toString(vals[s].charAt(i-1)));
+                            }
+                            for(int k=0;k < upto; k++){
+                                values[s][k] =Integer.parseInt(Character.toString(vals[s].charAt(k)));
+                            }
+                        }
+                        MatrixData mat = new MatrixData(values, nnz);
+                        ob[j] = mat;
+                    }
+                    ob[2]=i;
+                    list.add(ob);
+                }
+            }
+        }
+        catch (IOException e){
+            System.out.println("file path issue");
+        }
+
+        return list;
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class BasicMultiplierTest{
     private BasicMultiplier testSubject = new BasicMultiplier();
-    private static String fileName;
+    private static String fileName="./output/basic_output.csv";
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long totalTime=0;
@@ -35,7 +35,7 @@ public class BasicMultiplierTest{
      * @return output of getParamsByConditions method (a list of arrays of 2 matrices)
      */
     @Parameterized.Parameters()
-    public static Iterable<Object[]> data() {
+    public static Iterable<Object[]> data()throws IOException {
         double spar; int matrixType;
         if(System.getProperty("sparsity").isEmpty()) spar = sparsity;
         else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
@@ -43,12 +43,10 @@ public class BasicMultiplierTest{
         if(System.getProperty("matrixType").isEmpty()) matrixType = position;
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
-        System.out.println("pass parameters with sparsity " + spar);
-        System.out.println("with matrix type value "+ matrixType);
+        fileName = Utils.getFileName("basic", spar, matrixType, false);
+        String inputFile = Utils.getFileName("basic", spar, matrixType, true);
 
-        fileName = Utils.getFileName("basic", spar, matrixType);
-
-        return Utils.getParamsByConditions(300,1000, repeat,50, spar, matrixType);
+        return Utils.getParams(inputFile, 300,1000,repeat,50);
     }
 
     private MatrixData a;

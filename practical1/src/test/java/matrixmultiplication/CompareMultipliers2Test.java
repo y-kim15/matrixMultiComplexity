@@ -37,7 +37,7 @@ public class CompareMultipliers2Test {
     private static int position = 0;
 
     @Parameterized.Parameters()
-    public static Iterable<Object[]> data() {
+    public static Iterable<Object[]> data() throws IOException {
         double spar; int matrixType;
         if(System.getProperty("sparsity").isEmpty())spar = sparsity;
         else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
@@ -45,10 +45,10 @@ public class CompareMultipliers2Test {
         if(System.getProperty("matrixType").isEmpty()) matrixType = position;
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
-        fileName = Utils.getFileName("comp2", spar, matrixType);
+        fileName = Utils.getFileName("comp2", spar, matrixType,false);
+        String inputFile = Utils.getFileName("comp", spar, matrixType, true);
 
-        return Utils.getParamsByConditions(500,1000, repeat,50, spar, matrixType);
-
+        return Utils.getParams(inputFile, 500,1000,repeat,50);
     }
 
     private MatrixData a;
