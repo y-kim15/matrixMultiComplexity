@@ -88,6 +88,10 @@
                   <name>matrixType</name>
                   <value>${matrixType}</value>
               </property>
+              <property>
+                  <name>testName</name>
+                  <value>${testName}</value>
+              </property>
           </systemProperties>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
         </configuration>

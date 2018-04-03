@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="matrixmultiplication.DataTest" time="28.273" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="gnome"/>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/test-classes:/cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/classes:/cs/home/yk30/.m2/repository/junit/junit/4.12/junit-4.12.jar:/cs/home/yk30/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/cs/home/yk30/.m2/repository/com/carrotsearch/junit-benchmarks/0.7.2/junit-benchmarks-0.7.2.jar:/cs/home/yk30/.m2/repository/pl/pragmatists/JUnitParams/1.0.5/JUnitParams-1.0.5.jar:/cs/home/yk30/.m2/repository/com/h2database/h2/1.4.196/h2-1.4.196.jar:/cs/home/yk30/.m2/repository/org/apache/commons/commons-lang3/3.0/commons-lang3-3.0.jar:/cs/home/yk30/.m2/repository/gov/nist/math/jama/1.0.3/jama-1.0.3.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Linux"/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="testName" value="basic"/>
+    <property name="sun.boot.library.path" value="/usr/local/jdk1.8.0_161/jre/lib/amd64"/>
+    <property name="sun.java.command" value="/cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/surefire/surefirebooter1981828012264509198.jar /cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/surefire 2018-03-12T12-58-42_457-jvmRun1 surefire5200536496951809676tmp surefire_06848199896035789674tmp"/>
+    <property name="test" value="DataTest"/>
+    <property name="surefire.test.class.path" value="/cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/test-classes:/cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/classes:/cs/home/yk30/.m2/repository/junit/junit/4.12/junit-4.12.jar:/cs/home/yk30/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/cs/home/yk30/.m2/repository/com/carrotsearch/junit-benchmarks/0.7.2/junit-benchmarks-0.7.2.jar:/cs/home/yk30/.m2/repository/pl/pragmatists/JUnitParams/1.0.5/JUnitParams-1.0.5.jar:/cs/home/yk30/.m2/repository/com/h2database/h2/1.4.196/h2-1.4.196.jar:/cs/home/yk30/.m2/repository/org/apache/commons/commons-lang3/3.0/commons-lang3-3.0.jar:/cs/home/yk30/.m2/repository/gov/nist/math/jama/1.0.3/jama-1.0.3.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/cs/home/yk30"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="matrixType" value=""/>
+    <property name="java.home" value="/usr/local/jdk1.8.0_161/jre"/>
+    <property name="basedir" value="/cs/home/yk30/Documents/cs3052/CS3052p1/practical1"/>
+    <property name="file.separator" value="/"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/cs/home/yk30/Documents/cs3052/CS3052p1/practical1/target/surefire/surefirebooter1981828012264509198.jar"/>
+    <property name="sun.boot.class.path" value="/usr/local/jdk1.8.0_161/jre/lib/resources.jar:/usr/local/jdk1.8.0_161/jre/lib/rt.jar:/usr/local/jdk1.8.0_161/jre/lib/sunrsasign.jar:/usr/local/jdk1.8.0_161/jre/lib/jsse.jar:/usr/local/jdk1.8.0_161/jre/lib/jce.jar:/usr/local/jdk1.8.0_161/jre/lib/charsets.jar:/usr/local/jdk1.8.0_161/jre/lib/jfr.jar:/usr/local/jdk1.8.0_161/jre/classes"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_161-b12"/>
+    <property name="user.name" value="yk30"/>
+    <property name="sparsity" value=""/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="4.15.6-300.fc27.x86_64"/>
+    <property name="java.endorsed.dirs" value="/usr/local/jdk1.8.0_161/jre/lib/endorsed"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="/cs/home/yk30/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="1.8.0_161"/>
+    <property name="user.dir" value="/cs/home/yk30/Documents/cs3052/CS3052p1/practical1"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/cs/home/yk30/usr/lib:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.161-b12"/>
+    <property name="java.ext.dirs" value="/usr/local/jdk1.8.0_161/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="writeOutDataTest[0]" classname="matrixmultiplication.DataTest" time="28.247"/>
+</testsuite>

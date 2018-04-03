@@ -20,7 +20,7 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class BasicMultiplierTest{
     private BasicMultiplier testSubject = new BasicMultiplier();
-    private static String fileName="./output/basic_output.csv";
+    private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long totalTime=0;
@@ -44,9 +44,10 @@ public class BasicMultiplierTest{
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
         fileName = Utils.getFileName("basic", spar, matrixType, false);
-        String inputFile = Utils.getFileName("basic", spar, matrixType, true);
 
-        return Utils.getParams(inputFile, 300,1000,repeat,50);
+        String inputFile = Utils.getFileName("basic", spar, matrixType, true);
+        if(Files.exists(Paths.get(inputFile))) return Utils.getParams(inputFile, 300,1000,repeat,50);
+        else return Utils.getParamsByConditions(300, 1000, repeat, 50, spar, matrixType);
     }
 
     private MatrixData a;

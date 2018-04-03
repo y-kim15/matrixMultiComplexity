@@ -34,7 +34,7 @@ public class CompareMultipliers3Test {
     private static long[] totalTime = new long[]{0,0,0,0,0};
     private static int count = 0;
     private static int repeat = 25;
-    private static double sparsity = 0.9;
+    private static double sparsity = 0.75;
     private static int position = 0;
 
     @Parameterized.Parameters()
@@ -49,8 +49,8 @@ public class CompareMultipliers3Test {
         fileName = Utils.getFileName("comp3", spar, matrixType, false);
 
         String inputFile = Utils.getFileName("comp", spar, matrixType, true);
-
-        return Utils.getParams(inputFile, 500,1000,repeat,50);
+        if(Files.exists(Paths.get(inputFile))) return Utils.getParams(inputFile, 500,1000,repeat,50);
+        else return Utils.getParamsByConditions(500, 1000, repeat, 50, spar, matrixType);
     }
 
     private MatrixData a;

@@ -6,10 +6,9 @@ import matrixmultiplication.HashMapImplementation.Pair;
 import matrixmultiplication.JSAImplementation.JavaSparseArray;
 import matrixmultiplication.IntMatrixMultiplication.IntMatrix;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 import java.util.stream.Collectors;
@@ -24,13 +23,13 @@ import static java.lang.Math.round;
 public class Utils {
     // the maximum entry value of a matrix
     private static final int RANGE=9;
-    //private static final int SEED = 0;
-    //private static Random r = new Random(SEED);
 
     /**
      * Generates a sparse matrix according to controlled variables
      * @param sparsity a float value determining the minimal sparsity of the matrix. The value represents the proportion of zero entries
-     *                 the value should be at least 0.5.
+     *                 the value should be
+        String inputFile = Utils.getFileName("comp", spar, matrixType, true);
+ at least 0.5.
      * @param positions a integer value denoting the structure of the matrix 0) random (equivalent to getSparseMatrix method)
      *                 1) a band matrix 2) an upper triangle matrix (clustered)
      * @param range maximum integer value for matrix entry
@@ -317,12 +316,6 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         if(inOrOut){
             sb.append("./data/");
-            switch (testName){
-                case "basic": sb.append("Basic/");
-                                break;
-                case "comp": sb.append("CompareInput/");
-                            break;
-            }
         }
         else {
             sb.append("./output/");
@@ -397,5 +390,53 @@ public class Utils {
         }
 
         return list;
+    }
+
+    /**
+     * Stores values of a matrix in a string format to be saved in a CSV file
+     * @param data a pair data containing 2D int array and int for nnz value
+     * @return a string containing values separated by commas for row.
+     * Important thing to note is that we set all entries to be one digit number.
+     */
+    public static String makeString(MatrixData data){
+        StringBuilder builder = new StringBuilder();
+        int[][] v = data.values;
+        for(int i =0; i < v.length; i++){
+            for(int j=0; j < v.length; j++){
+                builder.append(Integer.toString(v[i][j])+"");
+            }
+            if(i < v.length-1)builder.append(",");
+
+        }
+        builder.append(";");
+        builder.append(data.nnz);
+        builder.append("\n");
+        return builder.toString();
+    }
+
+    /**
+     * Writes input matrices to a CSV file
+     * https://stackoverflow.com/questions/34958829/how-to-save-a-2d-array-into-a-text-file-with-bufferedwriter
+     * @param filePath file to write
+     * @param data a list of arrays containing matrices to write
+     * @throws IOException occurs when the file path is invalid
+     */
+    public static void writeOutData(String filePath, List<Object[]> data) throws IOException{
+        try{
+            Files.deleteIfExists(Paths.get(filePath));
+            BufferedWriter w = new BufferedWriter(new FileWriter(filePath));
+            for(int i=0; i< data.size(); i++){
+                for(int j=0; j< 2; j++){
+                    MatrixData d = (MatrixData) data.get(i)[j];
+                    String matStr = makeString(d);
+                    w.write(matStr);
+
+                }
+            }
+            w.close();
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

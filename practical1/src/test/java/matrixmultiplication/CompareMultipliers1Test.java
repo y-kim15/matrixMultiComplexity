@@ -24,7 +24,7 @@ import java.util.List;
 public class CompareMultipliers1Test {
     private BasicMultiplier testSubject = new BasicMultiplier();
     private AdvancedMultiplier testSubject2 = new AdvancedMultiplier();
-    private static String fileName;//="./output/comp1_output";
+    private static String fileName;
     private static FileWriter writer;
     private static List<String> inputBuffer = new ArrayList<String>();
     private static long[] totalTime=new long[]{0,0,0};
@@ -36,16 +36,17 @@ public class CompareMultipliers1Test {
     @Parameterized.Parameters()
     public static Iterable<Object[]> data() throws IOException{
         double spar; int matrixType;
-        if(System.getProperty("sparsity").isEmpty())spar = sparsity;
+        if(System.getProperty("sparsity").isEmpty()) spar = sparsity;
         else spar = Math.round(Double.valueOf(System.getProperty("sparsity"))*100D)/100D;
 
         if(System.getProperty("matrixType").isEmpty()) matrixType = position;
         else matrixType = Integer.valueOf(System.getProperty("matrixType"));
 
         fileName = Utils.getFileName("comp1", spar, matrixType, false);
-        String inputFile = Utils.getFileName("comp",spar, matrixType, true);
 
-        return Utils.getParams(inputFile, 500,1000,repeat,50);
+        String inputFile = Utils.getFileName("comp", spar, matrixType, true);
+        if(Files.exists(Paths.get(inputFile))) return Utils.getParams(inputFile, 500,1000,repeat,50);
+        else return Utils.getParamsByConditions(500, 1000, repeat, 50, spar, matrixType);
     }
 
     private MatrixData a;
